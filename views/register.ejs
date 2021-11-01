@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <%- include('./partials/flash') %>
+    <div id="vantajs" >
+    <div class="login-box">
+        <h2>Sign Up</h2>
+        <form action="/register" method="POST">
+          <div class="user-box">
+            <input type="text" name="username" id="username" required="">
+            <label for="username">Name</label>
+          </div>
+
+          <div class="user-box">
+            <input type="email" name="email" id="email" required="">
+            <label for="email">Email</label>
+          </div>
+          
+          <div class="user-box">
+            <input type="password" name="password" id="password" required="">
+            <label for="password">Password</label>
+          </div>
+
+          <div class="user-box">
+            <input type="tel" name="pno" id="pno" required="">
+            <label for="pno">Phone No</label>
+          </div>
+
+          <div class="user-box">
+            <input type="text" name="carno" id="carno" required="">
+            <label for="carno">Car Number</label>
+          </div>
+
+          <button >
+            <span></span>
+            <span></span>
+            Register
+          </button>
+          <a href="/login" style="float:right">
+            Sign In
+          </a>
+        </form>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r123/three.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.21/vanta.clouds.min.js"></script>
+        </div>
+      </div>
+      <script>
+        VANTA.CLOUDS({
+            el: "#vantajs",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            
+        })
+        </script>
+</body>
+</html>
