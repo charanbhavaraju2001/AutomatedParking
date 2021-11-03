@@ -4,10 +4,12 @@ const session = require('express-session')
 const passport = require('passport');
 const localStrategy = require('passport-local')
 const User = require('./models/user')
+const Slot = require('./models/slots')
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError')
-const {isLoggedIn} = require('./middleware');
+const { isLoggedIn } = require('./middleware');
 const flash = require('connect-flash')
+const methodOverride = require('method-override')
 const app = express();
 
 const mongoose = require('mongoose');
@@ -56,6 +58,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 //to parse req.body object
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'))
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
@@ -102,8 +105,25 @@ app.get('/logout', (req, res) => {
     res.redirect('/login');
 })
 
-app.get('/home',isLoggedIn, (req, res) => {
-    res.render('home');
+app.get('/home', isLoggedIn, catchAsync(async (req, res) => {
+    const slots = await Slot.find({})
+    res.render('home', { slots });
+}))
+
+app.put('/home', catchAsync(async (req, res) => {
+
+    const { slotid } = req.body
+    console.log(slotid)
+    const updatedslot = await Slot.findOneAndUpdate({slotid:slotid}, {
+        status: 'occupied',
+        user: req.user.username
+    })
+    console.log(updatedslot)
+    res.redirect('/home')
+}))
+
+app.get('/about', (req, res) => {
+    res.render('about')
 })
 
 

@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css?family=Courgette|Open+Sans:400,800&display=swap');
+
+/*Resetting the margins to zero*/
+*,
+*::before,
+*::after {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root {
+    --dark-color:#2d2d30;
+    --blue-solid:#000099;
+    --blue-transparent:rgba(41, 6, 235, 0.7);
+    --blue-transparent-alt:rgba(22, 6, 114, 0.5);
+    --blue-light:#1216f5;
+    --yellow-solid:#fa9e2c;
+    --gradient-color: linear-gradient(to right, var(--yellow-solid), var(--blue-light));
+    --gradient-color-alt: linear-gradient(to right, var(--blue-light), var(--yellow-solid));
+
+}
+/*Global Styles*/
+html {
+    font-size: 10px;;
+}
+
+body {
+    font-size:1.6rem;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    color:var(--dark-color);
+    background-color: rgb(204, 204, 255);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+section {
+    padding: 5rem 0;
+}
+
+/*Header styles*/
+.container {
+    width: 100%;
+    padding: 0 1.5rem;
+    margin: 0 auto;
+}
+
+.header{
+    width: 100%;
+    height: 4.5rem;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--blue-solid);
+    z-index: 999; /*z index specifies stack order. Element with greater order is always in front of the ele with lower order*/
+}
+
+.nav{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.logo img{
+    max-width: 10%;   
+    align-items:flex-start; 
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    background-color:var(--gradient-color);
+    padding: 50px;
+    grid-column-gap: 60px;
+    grid-row-gap: 90px;
+    border-top: black;
+  }
+  .grid-container1 {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    background-color:var(--gradient-color);
+    padding: 50px;
+    grid-column-gap: 60px;
+    grid-row-gap: 90px;
+    border-top: black;
+  }
+
+  .row1 {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    background-color:var(--gradient-color);
+    padding: 50px;
+    grid-column-gap: 40px;
+    grid-row-gap: 90px;
+    border-top-color: black;
+  }
+
+  .grid-item {
+    background-color: rgba(17, 235, 90, 0.8);
+    border: 1px solid rgba(253, 235, 235, 0.8);
+    padding: 30px;
+    font-size: 30px;
+    text-align: center;
+    border-top-color: black;
+    border-top: dashed 3px;
+  }
+  .grid-item2 {
+    background-color: rgba(17, 235, 90, 0.8);
+    border: 1px solid rgba(253, 235, 235, 0.8);
+    padding: 20px;
+    font-size: 10px;
+    text-align: center;
+    border-top-color: black;
+    border-bottom: dashed 3px;
+  }
+  .grid-item:hover {
+      background-color: red;
+  }
+  .grid-item2:hover {
+    background-color: red;
+}
+
+.selected {
+    background-color: #000099;
+}
+
+.row {
+    display: flex;
+  }
+
+  .container {
+    perspective: 1000px;
+    margin-bottom: 30px;
+  }
+  
+  .seat {
+    background-color: rgba(17, 235, 90, 0.8);
+    border: 1px solid rgba(253, 235, 235, 0.8);
+    padding: 20px;
+    font-size: 10px;
+    text-align: center;
+    border-top-color: black;
+    border-bottom: dashed 3px;
+  }
+  
+  .seat.selected {
+    background-color: #6feaf6;
+  }
+  
+  .seat.occupied {
+    background-color: rgb(119, 111, 111);
+  }
+  
+  #text {
+    visibility: hidden;
+  }
