@@ -17,64 +17,25 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Parking Assistant</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/home">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
-          </li>
-          <li class="nav-item float-end">
-            <a class="nav-link " href="/logout">Logout</a>
-          </li>
-        </ul>
+  <%- include('partials/navbar') %>
+    <div class="container">
+      <div class="row1">
+        <% for(let slot of slots ){%>
+          <div class="seat <%= slot.status =='occupied' ? 'occupied' : '' %>" id=<%=slot.slotid %>><%= slot.slotid %>
+          </div>
+          <% } %>
       </div>
     </div>
-  </nav>
-  <div class="container">
-    <!-- <div class=" row1">
-      <div class="seat" id="1">1</div>
-      <div class="seat" id="2">2</div>
-      <div class="seat" id="3">3</div>
-      <div class="seat" id="4">4</div>
-      <div class="seat" id="5">5</div>
-      <div class="seat" id="6">6</div>
-      <div class="seat" id="7">7</div>
-      <div class="seat" id="8">8</div>
-    </div>
-    <div class="row1">
-      <div class="seat" id="9">9</div>
-      <div class="seat" id="10">10</div>
-      <div class="seat" id="11">11</div>
-      <div class="seat occupied" id="12">12</div>
-      <div class="seat occupied" id="13">13</div>
-      <div class="seat" id="14">14</div>
-      <div class="seat" id="15">15</div>
-      <div class="seat" id="16">16</div>
-    </div> -->
-    <div class="row1">
-    <% for(let slot of slots ){%>
-      <div class="seat <%= slot.status =='occupied' ? 'occupied' : '' %>" id=<%= slot.slotid %>><%= slot.slotid %></div>
-      <% } %>  
-    </div>
-  </div>
 
 
-  <form action="/home?_method=PUT" method="POST">
-    <input type="text" name="slotid" value="" id="text">
-    <center>
-      <button class="btn btn-outline-primary btn-lg">Book</button></center>
-  </form>
+    <form action="/home?_method=PUT" method="POST">
+      <input type="text" name="slotid" value="" id="text">
+      <center>
+        <button class="btn btn-outline-primary btn-lg">Book</button>
+      </center>
+    </form>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

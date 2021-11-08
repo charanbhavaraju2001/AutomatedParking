@@ -106,19 +106,54 @@ app.get('/logout', (req, res) => {
 })
 
 app.get('/home', isLoggedIn, catchAsync(async (req, res) => {
-    const slots = await Slot.find({})
-    res.render('home', { slots });
+    if(req.session.flag != 1) {
+        const slots = await Slot.find({})
+        res.render('home', { slots });
+    }else {
+        const slots = await Slot.find({})
+        const id = req.session.slotid
+        res.render('booked',{slots,id});
+    }
+
+
 }))
 
+//book
 app.put('/home', catchAsync(async (req, res) => {
 
     const { slotid } = req.body
-    console.log(slotid)
     const updatedslot = await Slot.findOneAndUpdate({slotid:slotid}, {
         status: 'occupied',
-        user: req.user.username
+        user: req.user.username,
+        enteredat: new Date()
     })
     console.log(updatedslot)
+    req.session.flag = 1
+    req.session.slotid = slotid
+    res.redirect('/home')
+}))
+
+//leave
+app.put('/booked',catchAsync(async (req, res) => {
+
+    const slotid = req.session.slotid;
+    const updatedslot = await Slot.findOneAndUpdate({slotid:slotid}, {
+        status: 'unoccupied',
+        user: '',
+        leftat: new Date()
+    },{new:true})
+    const timeparked = updatedslot.leftat.getTime() - updatedslot.enteredat.getTime()
+    console.log(updatedslot)
+    console.log(timeparked)
+    req.session.flag = 0
+    req.session.slotid = null
+
+    const resetslot = await Slot.findOneAndUpdate({slotid:slotid}, {
+        status: 'unoccupied',
+        user: '',
+        enteredat: null,
+        leftat: null
+    })
     res.redirect('/home')
 }))
 

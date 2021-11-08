@@ -20,6 +20,8 @@ const seedDB = async () => {
             slotid: i,
             user: '',
             status: 'unoccupied',
+            enteredat: null,
+            leftat: null
         })
         await slot.save()
     }

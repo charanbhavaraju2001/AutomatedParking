@@ -165,3 +165,12 @@ section {
   #text {
     visibility: hidden;
   }
+
+  #infotext {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .seat.bookedslot{
+    background-color: #8f8fff;
+  }

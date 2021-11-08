@@ -13,6 +13,12 @@ const slotSchema = new Schema({
     status: {
         type:String,
         required:true
+    },
+    enteredat: {
+        type:Date
+    },
+    leftat: {
+        type:Date
     }
 })
 
