@@ -10,7 +10,20 @@ const ExpressError = require('./utils/ExpressError')
 const { isLoggedIn } = require('./middleware');
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
+const nodemailer = require('nodemailer');
+const routes = require('./routes/allroutes')
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+io.on('connection', (socket) => {
+    socket.on('slotbooked',(data)=>{
+        socket.broadcast.emit('slotbooked',data)
+    })
+
+    socket.on('slotleft',(data)=>{
+        socket.broadcast.emit('slotleft',data)
+    })
+});
 
 const mongoose = require('mongoose');
 
@@ -67,106 +80,8 @@ app.use((req, res, next) => {
     next();
 })
 
-//login route
-app.get('/login', (req, res) => {
-    res.render('login');
-})
+app.use('/',routes)
 
-app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
-    res.redirect('/home');
-})
-
-app.get('/register', (req, res) => {
-    res.render('register');
-})
-
-app.post('/register', catchAsync(async (req, res) => {
-    try {
-        const { username, password, email, pno, carno } = req.body;
-        const user = new User({ email, username, pno, carno });
-        const registeredUser = await User.register(user, password);
-        req.login(registeredUser, err => {
-            if (err) return next(err);
-            req.flash('success', 'Welcome to ParkingAssistant');
-            console.log(registeredUser);
-            res.redirect('/home')
-        })
-
-    } catch (e) {
-        req.flash('success', e.message);
-        res.redirect('/register')
-    }
-
-}))
-
-app.get('/logout', (req, res) => {
-    req.logout();
-    req.flash('success', "Goodbye!");
-    res.redirect('/login');
-})
-
-app.get('/home', isLoggedIn, catchAsync(async (req, res) => {
-    if(req.session.flag != 1) {
-        const slots = await Slot.find({})
-        res.render('home', { slots });
-    }else {
-        const slots = await Slot.find({})
-        const id = req.session.slotid
-        res.render('booked',{slots,id});
-    }
-
-
-}))
-
-//book
-app.put('/home', catchAsync(async (req, res) => {
-
-    const { slotid } = req.body
-    const updatedslot = await Slot.findOneAndUpdate({slotid:slotid}, {
-        status: 'occupied',
-        user: req.user.username,
-        enteredat: new Date()
-    })
-    console.log(updatedslot)
-    req.session.flag = 1
-    req.session.slotid = slotid
-    res.redirect('/home')
-}))
-
-//leave
-app.put('/booked',catchAsync(async (req, res) => {
-
-    const slotid = req.session.slotid;
-    const updatedslot = await Slot.findOneAndUpdate({slotid:slotid}, {
-        status: 'unoccupied',
-        user: '',
-        leftat: new Date()
-    },{new:true})
-    const timeparked = updatedslot.leftat.getTime() - updatedslot.enteredat.getTime()
-    console.log(updatedslot)
-    console.log(timeparked)
-    req.session.flag = 0
-    req.session.slotid = null
-
-    const resetslot = await Slot.findOneAndUpdate({slotid:slotid}, {
-        status: 'unoccupied',
-        user: '',
-        enteredat: null,
-        leftat: null
-    })
-    res.redirect('/home')
-}))
-
-app.get('/about', (req, res) => {
-    res.render('about')
-})
-
-
-app.get('*', (req, res) => {
-    res.send("Error!")
-})
-
-
-app.listen(3000, () => {
-    console.log("Listening on port 3000");
-})
+server.listen(3000, () => {
+    console.log("Listening on port 3000")
+});
