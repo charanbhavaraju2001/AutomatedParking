@@ -18,7 +18,6 @@
     --yellow-solid:#fa9e2c;
     --gradient-color: linear-gradient(to right, var(--yellow-solid), var(--blue-light));
     --gradient-color-alt: linear-gradient(to right, var(--blue-light), var(--yellow-solid));
-
 }
 /*Global Styles*/
 html {
@@ -29,7 +28,7 @@ body {
     font-size:1.6rem;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
     color:var(--dark-color);
-    background-color: rgb(204, 204, 255);
+    background-color: #5C6F68;
 }
 
 a {
@@ -68,14 +67,12 @@ section {
     display:flex;
     align-items: center;
     justify-content: space-between;
-
 }
 
 .logo img{
     max-width: 10%;   
     align-items:flex-start; 
 }
-
 
 .grid-container {
     display: grid;
@@ -172,5 +169,67 @@ section {
   }
 
   .seat.bookedslot{
-    background-color: #8f8fff;
+    background-color: #6feaf6;
   }
+
+
+  .seat-legends-wrapper .seat-legend-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.seat-legends-wrapper .seat-legend-container .seat-legend-box.status-2, .seat-legends-wrapper .seat-legend-container .seat-legend-box.status-9 {
+  background-color:rgb(119, 111, 111);;
+}
+.seat-legends-wrapper .seat-legend-container:first-child .seat-legend-box {
+  margin-left: 0;
+}
+.seat-legends-wrapper .seat-legend-container .seat-legend-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 2px;
+  width: 16px;
+  height: 16px;
+  margin-left: 32px;
+}
+
+.seat-legends-wrapper {
+  height: 32px;
+  width: 100%;
+  background-color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  z-index: 98;
+}
+
+.seat-legends-wrapper .seat-legend-container .seat-legend-box.status-1 {
+  background-color: #41ef7b;
+  border: 1px solid #000;
+}
+
+.seat-legends-wrapper .seat-legend-container .seat-legend-box.status-88 {
+  background-color: #6feaf6;;
+}

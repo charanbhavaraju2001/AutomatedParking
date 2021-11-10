@@ -16,12 +16,12 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 io.on('connection', (socket) => {
-    socket.on('slotbooked',(data)=>{
-        socket.broadcast.emit('slotbooked',data)
+    socket.on('slotbooked', (data) => {
+        socket.broadcast.emit('slotbooked', data)
     })
 
-    socket.on('slotleft',(data)=>{
-        socket.broadcast.emit('slotleft',data)
+    socket.on('slotleft', (data) => {
+        socket.broadcast.emit('slotleft', data)
     })
 });
 
@@ -80,7 +80,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/',routes)
+app.use('/', routes)
 
 server.listen(3000, () => {
     console.log("Listening on port 3000")

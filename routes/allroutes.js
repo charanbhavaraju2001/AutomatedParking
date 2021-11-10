@@ -18,7 +18,7 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
-    req.flash('success',`Welcome Back ${req.user.username}!`)
+    req.flash('success', `Welcome Back ${req.user.username}!`)
     res.redirect('/home');
 })
 
@@ -89,7 +89,7 @@ router.put('/booked', catchAsync(async (req, res) => {
         leftat: new Date()
     }, { new: true })
     const timeparked = updatedslot.leftat.getTime() - updatedslot.enteredat.getTime()
-    const parkingfee = Math.floor(timeparked/(1000))
+    const parkingfee = Math.floor(timeparked / (1000))
     console.log(updatedslot)
     console.log(parkingfee)
     req.session.flag = 0
@@ -99,30 +99,30 @@ router.put('/booked', catchAsync(async (req, res) => {
 
 
     const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'parkmatehelp@gmail.com',
-        pass: 'parkmate123'
-    }
+        service: 'gmail',
+        auth: {
+            user: 'parkmatehelp@gmail.com',
+            pass: 'parkmate123'
+        }
     });
 
     const mailOptions = {
-    from: 'parkmatehelp@gmail.com',
-    to: req.user.email,
-    subject: 'Parking Fee',
-    text: `Hi ${req.user.username},\n
-            These are the timestamps of your visit ${updatedslot.enteredat} - ${updatedslot.leftat} \n
+        from: 'parkmatehelp@gmail.com',
+        to: req.user.email,
+        subject: 'Parking Fee',
+        text: `Hi ${req.user.username},\n
+            These are the timestamps of your visit (${updatedslot.enteredat} - ${updatedslot.leftat}) \n
             Your parking fee is : ${parkingfee}\n
-            Thankyou for your visit!`
-    // html: '<h1>Hi Smartherd</h1><p>Your Messsage</p>'        
+            Thank you, Visit again!!`
+        // html: '<h1>Hi Smartherd</h1><p>Your Messsage</p>'        
     };
 
-    transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-        console.log(error);
-    } else {
-        console.log('Email sent: ' + info.response);
-    }
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
     });
 
 
@@ -141,7 +141,7 @@ router.get('/about', (req, res) => {
 
 
 router.get('*', (req, res) => {
-    req.flash("error",'There was an error/That page does not exist')
+    req.flash("error", 'There was an error/That page does not exist')
     res.redirect('home')
 })
 
