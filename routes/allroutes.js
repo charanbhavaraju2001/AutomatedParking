@@ -45,10 +45,10 @@ router.post('/register', catchAsync(async (req, res) => {
 
 }))
 
-router.get('/logout', (req, res) => {
+router.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
     req.flash('success', "Goodbye!");
-    res.redirect('/login');
+    res.redirect('/starting');
 })
 
 router.get('/home', isLoggedIn, catchAsync(async (req, res) => {
@@ -89,7 +89,7 @@ router.put('/booked', catchAsync(async (req, res) => {
         leftat: new Date()
     }, { new: true })
     const timeparked = updatedslot.leftat.getTime() - updatedslot.enteredat.getTime()
-    const parkingfee = Math.floor(timeparked / (1000))
+    const parkingfee = Math.floor(timeparked / (1000 * 30))
     console.log(updatedslot)
     console.log(parkingfee)
     req.session.flag = 0
@@ -139,10 +139,14 @@ router.get('/about', (req, res) => {
     res.render('about')
 })
 
+router.get('/starting',(req,res) =>{
+    res.render('starting')
+})
+
 
 router.get('*', (req, res) => {
     req.flash("error", 'There was an error/That page does not exist')
-    res.redirect('home')
+    res.redirect('starting')
 })
 
 module.exports = router;
